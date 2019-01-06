@@ -1,3 +1,5 @@
+# Snippet taken from https://bottlepy.org/
+
 from bottle import route, install, template
 from bottle_sqlite import SQLitePlugin
 

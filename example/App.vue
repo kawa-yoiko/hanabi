@@ -20,13 +20,13 @@
     data() {
       return {
         active: 'vue',
-        footer: hanabi(`---\n\n<!-- haha, this looks hilarious -->\n<!-- flower and fire, such a highlighter, https://github.com/egoist/hanabi -->`),
+        footer: hanabi(`---\n\n<!-- haha, this looks hilarious -->\n<!-- flower and fire, such a highlighter, https://github.com/egoist/hanabi -->`, {language: 'html'}),
         examples: {
-          vue: hanabi(code),
-          preact: import('!raw-loader!./examples/preact'),
-          next: import('!raw-loader!./examples/next'),
-          python: import('!raw-loader!./examples/python.py'),
-          golang: import('!raw-loader!./examples/golang.go')
+          vue: [hanabi(code), 'js'],
+          preact: [import('!raw-loader!./examples/preact'), 'js'],
+          next: [import('!raw-loader!./examples/next'), 'js'],
+          python: [import('!raw-loader!./examples/python.py'), 'py'],
+          golang: [import('!raw-loader!./examples/golang.go'), 'go']
         }
       }
     },
@@ -35,7 +35,7 @@
     },
     computed: {
       code() {
-        return this.examples[this.active]
+        return this.examples[this.active][0]
       }
     },
     methods: {
@@ -43,12 +43,14 @@
         this.changeExample(value)
       },
       changeExample(type) {
-        const example = this.examples[type]
+        const example = this.examples[type][0]
         if (typeof example === 'string') {
           this.active = type
         } else {
           example.then(code => {
-            this.examples[type] = hanabi(code)
+            this.examples[type][0] = hanabi(code, {
+              language: this.examples[type][1]
+            })
             this.active = type
           })
         }
