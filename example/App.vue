@@ -6,6 +6,7 @@
       <option value="next">Next.js</option>
       <option value="python">Python</option>
       <option value="golang">Golang</option>
+      <option value="haskell">Haskell</option>
     </select>
     <pre><code v-html="code"></code></pre>
     <pre><code v-html="footer"></code></pre>
@@ -26,7 +27,8 @@
           preact: [import('!raw-loader!./examples/preact'), 'js'],
           next: [import('!raw-loader!./examples/next'), 'js'],
           python: [import('!raw-loader!./examples/python.py'), 'py'],
-          golang: [import('!raw-loader!./examples/golang.go'), 'go']
+          golang: [import('!raw-loader!./examples/golang.go'), 'go'],
+          haskell: [import('!raw-loader!./examples/haskell.hs'), 'hs']
         }
       }
     },

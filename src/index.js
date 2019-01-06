@@ -12,7 +12,8 @@ const languageOptions = {
   'js': [null, null, null],
   'html': [null, /(?:<!--[\S\s]*?-->)/, null],
   'py': [null, /(?:(?:^|\s)#.+?$)/, null],
-  'go': [null, null, null]
+  'go': [null, null, null],
+  'hs': [/[\w|']+/, /(?:(?:^|\s)--.+?$)|(?:\{-[\S\s]*?-\})/, null]
 }
 
 const escapeHTMLChar = function (ch) {
