@@ -68,10 +68,10 @@ export default function (input, {
     } else {
       color = colors[index]
       cache[word] = color
+      index = ++index % colors.length
     }
 
     const out = `<span style="color: #${color}">${word}</span>`
-    index = ++index % colors.length
     return out
   })
 }
