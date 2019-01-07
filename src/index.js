@@ -33,14 +33,35 @@ const escapeHTML = function (unsafe) {
   return unsafe.replace(/[&<"']/g, escapeHTMLChar)
 }
 
+class ColorCache {
+  constructor(arr) {
+    this.arr = arr
+    this.cache = {}
+    this.index = 0
+  }
+
+  forWord(word) {
+    let ret
+    if (this.cache[word]) {
+      ret = this.cache[word]
+    } else {
+      ret = this.arr[this.index]
+      this.cache[word] = ret
+      this.index = ++this.index % this.arr.length
+    }
+    return ret
+  }
+}
+
 export default function (input, {
   language = null,
   colors = defaultColors
 } = {}) {
-  let index = 0
-  const cache = {}
   const optionsAltered = languageOptions[language] || [null, null, null]
   const options = optionsAltered.map((x, id) => x || defaultLanguageOptions[id])
+
+  const cache = new ColorCache(colors)
+
   const wordRe = options[0]
   const commentRe = options[1]
   const stringLitRe = options[2]
@@ -62,16 +83,7 @@ export default function (input, {
       return escapeHTMLChar(esc)
     }
 
-    let color
-    if (cache[word]) {
-      color = cache[word]
-    } else {
-      color = colors[index]
-      cache[word] = color
-      index = ++index % colors.length
-    }
-
-    const out = `<span style="color: #${color}">${word}</span>`
+    const out = `<span style="color: #${cache.forWord(word)}">${word}</span>`
     return out
   })
 }
