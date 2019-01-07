@@ -58,7 +58,7 @@ const colorizeComment = function (cm) {
 }
 
 const colorizeStrLit = function (cache, str) {
-  return `<span style="color: mediumslateblue">${escapeHTML(str)}</span>`
+  return `<span style="color: #${cache.forWord(str)}; filter: saturate(0.4)">${escapeHTML(str)}</span>`
 }
 
 const colorizeWord = function (cache, word) {
